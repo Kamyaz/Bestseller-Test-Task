@@ -1,39 +1,4 @@
-{%- liquid
-  assign mock_title = ""
-  assign mock_image = ""
-  
-  if is_mock
-    assign mod = index | modulo: 9
-    if mod == 1
-      assign mock_title = "OUTSIDE VIBES T-SHIRT SUNSHINE"
-      assign mock_image = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600"
-    elsif mod == 2
-      assign mock_title = "HIKE BOTTLE OUTSIDE VIBES"
-      assign mock_image = "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600"
-    elsif mod == 3
-      assign mock_title = "REST IN NATURE T-SHIRT"
-      assign mock_image = "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600"
-    elsif mod == 4
-      assign mock_title = "TRAVEL ESSENTIALS"
-      assign mock_image = "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600"
-    elsif mod == 5
-      assign mock_title = "WEEKEND ADVENTURE"
-      assign mock_image = "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600"
-    elsif mod == 6
-      assign mock_title = "SUMMER COLLECTION"
-      assign mock_image = "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600"
-    elsif mod == 7
-      assign mock_title = "MOUNTAIN HIKER"
-      assign mock_image = "https://images.unsplash.com/photo-1504593811423-6dd665756598?w=600"
-    elsif mod == 8
-      assign mock_title = "OUTDOOR LIFESTYLE"
-      assign mock_image = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600"
-    else
-      assign mock_title = "EXPLORE MORE"
-      assign mock_image = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600"
-    endif
-  endif
--%}
+{% comment %}  {% endcomment %}
 
 <div class="best-sellers__product-card group">
   <div class="best-sellers__image-wrapper">
@@ -73,13 +38,11 @@
         if is_mock
           assign show_best_seller = true
         else
-          for tag in card_product.tags
-            assign downcased_tag = tag | downcase
-            if downcased_tag == 'best-seller' or downcased_tag == 'best seller'
-              assign show_best_seller = true
-              break
-            endif
-          endfor
+          assign product_tag = card_product.metafields.custom.product_tag
+
+if product_tag != blank
+  assign show_best_seller = true
+endif
         endif
 
         assign show_sale = false
@@ -94,9 +57,11 @@
         endif
       -%}
 
-      {%- if show_best_seller -%}
-        <span class="best-sellers__badge best-sellers__badge--left">Best Seller</span>
-      {%- endif -%}
+      {% if product_tag != blank %}
+  <span class="best-sellers__badge best-sellers__badge--left">
+    {{ product_tag }}
+  </span>
+{% endif %}
 
       {%- if show_sale -%}
         <span class="best-sellers__badge best-sellers__badge--right">Save {{ discount_percentage }}%</span>

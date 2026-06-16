@@ -91,24 +91,27 @@
     }
   }
 
-  /* Custom scrollbar matching original */
   .best-sellers__desktop-slider::-webkit-scrollbar {
-    height: 4px;
-    transition: height 0.2s ease;
-  }
+  height: 4px;
+}
 
-  .best-sellers__desktop-slider:hover::-webkit-scrollbar {
-    height: 6px;
-  }
+.best-sellers__desktop-slider::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-  .best-sellers__desktop-slider::-webkit-scrollbar-track {
-    background: transparent;
-  }
+.best-sellers__desktop-slider::-webkit-scrollbar-thumb {
+  background: #2d2d2d00;
+  border-radius: 999px;
+}
 
-  .best-sellers__desktop-slider::-webkit-scrollbar-thumb {
-    border-radius: 9999px;
-    background-color: #222;
-  }
+.best-sellers__desktop-slider:hover::-webkit-scrollbar,
+.best-sellers__desktop-slider:active::-webkit-scrollbar {
+  height: 6px;
+}
+
+.best-sellers__desktop-slider {
+    background: #ffffff00 !important;
+}
 
   /* Product card & wrapping */
   .best-sellers__product {
@@ -324,7 +327,6 @@
 
     {%- if has_products -%}
       
-      <!-- Desktop Slider -->
       <div class="best-sellers__desktop-slider">
         {%- for product in products limit: desktop_limit -%}
           <article class="best-sellers__product best-sellers__product--desktop">
@@ -333,7 +335,6 @@
         {%- endfor -%}
       </div>
 
-      <!-- Mobile Container -->
       <div class="best-sellers__mobile-container">
         {%- if products_count > mobile_initial and enable_show_more -%}
           
@@ -362,7 +363,6 @@
 
         {%- else -%}
           
-          <!-- All products shown initially up to desktop_limit -->
           <div class="best-sellers__mobile-grid">
             {%- for product in products limit: desktop_limit -%}
               <article class="best-sellers__product">
@@ -376,8 +376,7 @@
 
     {%- else -%}
 
-      <!-- Mock/Fallback State for Theme Editor Setup -->
-      <!-- Desktop Slider -->
+
       <div class="best-sellers__desktop-slider">
         {%- for i in (1..desktop_limit) -%}
           <article class="best-sellers__product best-sellers__product--desktop">
@@ -431,7 +430,6 @@
 </section>
 
 {%- capture product_card_html -%}
-  <!-- Defined inside capture block to render inline safely, avoiding external file dependencies -->
 {%- endcapture -%}
 
 {%- capture star_svg -%}
